@@ -37,8 +37,8 @@
 
     // Initialize the chatbot
     const initializeChatbot = (shadowRoot) => {
-        loadCSS('https://yourcdn.com/chatbot.css'); // External CSS for the chatbot
-        loadScript('https://yourcdn.com/chatbot.js', () => {
+        loadCSS('https://chat-bot-ernesto.vercel.app/chatbot.css'); // External CSS for the chatbot
+        loadScript('https://chat-bot-ernesto.vercel.app/chatbot.js', () => {
             // Chatbot JavaScript functionality will be loaded here
             // Initialize the chatbot (this will call the function from chatbot.js)
             if (typeof startChatbot === 'function') {
@@ -48,5 +48,5 @@
     };
 
     // Load the chatbot HTML
-    loadChatbotHTML('https://yourcdn.com/chatbot.html'); // Path to your HTML
+    loadChatbotHTML('https://chat-bot-ernesto.vercel.app/chatbot.html'); // Path to your HTML
 })();
