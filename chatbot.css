@@ -1,0 +1,183 @@
+* {
+    box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: #2c3e50 #ecf0f1;
+}
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f4f6f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+.hidden {
+    display: none;
+}
+
+/* Logo styling */
+.logo-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+.logo {
+    cursor: pointer;
+    width: 70px; /* Adjust size as needed */
+    height: 70px;
+    border-radius: 50%; /* Makes the logo rounded */
+    border: 2px solid #ddd; /* Optional border for styling */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Adds shadow for better visibility */
+    object-fit: cover; /* Ensures the image fits perfectly in the rounded shape */
+}
+
+.chat-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+
+    width: 550px;
+    height: 650px;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+.chat-header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.chat-header .profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.chat-header .profile-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #34495e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+.chat-header .close-btn {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+.chat-header .close-btn:hover {
+    transform: scale(1.2);
+    color: #e74c3c;
+}
+.chat-messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: #f8f9fa;
+}
+.message {
+    max-width: 80%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    position: relative;
+    opacity: 0;
+    transform: translateY(20px) translateX(10px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    word-wrap: break-word;
+    line-height: 1.4;
+}
+.message.user {
+    background-color: #2c3e50;
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+    transform: translateY(20px) translateX(-10px);
+}
+.message.bot {
+    background-color: #ecf0f1;
+    color: #2c3e50;
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+}
+.message.animate {
+    opacity: 1;
+    transform: translateY(0) translateX(0);
+}
+.chat-input {
+    display: flex;
+    padding: 15px;
+    background-color: white;
+    border-top: 1px solid #e5e7eb;
+    gap: 10px;
+}
+.chat-input input {
+    flex-grow: 1;
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+.chat-input input:focus {
+    border-color: #2c3e50;
+    box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.1);
+}
+.chat-input button {
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.chat-input button:hover {
+    background-color: #34495e;
+}
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    background-color: #ecf0f1;
+    padding: 15px 15px;
+    border-radius: 12px;
+    align-self: flex-start;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+}
+.typing-indicator.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+.typing-indicator span {
+    width: 9px;
+    height: 9px;
+    background-color: #2c3e50;
+    border-radius: 50%;
+    margin: 0 3px;
+    animation: typing 1.4s infinite ease-in-out;
+}
+.typing-indicator span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+.typing-indicator span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+@keyframes typing {
+    0%, 100% { transform: translateY(0); opacity: 0.4; }
+    50% { transform: translateY(-4px); opacity: 1; }
+}
