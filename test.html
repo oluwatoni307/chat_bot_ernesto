@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test Chatbot Widget</title>
+  </head>
+  <body>
+    <h1>Test Chatbot Widget</h1>
+    <div id="chatContainer"></div>
+
+    <!-- Include your chatbot widget JavaScript file -->
+    <script>
+      var chatbotConfig = {
+        name: "Custom Bot",
+        description: "Your personal assistant",
+        initialMessage: "Hi there! What can I do for you?",
+        headerColor: "#ff0000",
+      };
+
+      // Load snippet with config
+      var s1 = document.createElement("script");
+      s1.async = true;
+      s1.src = "snippet.js";
+      s1.setAttribute("data-config", JSON.stringify(chatbotConfig));
+      document.head.appendChild(s1);
+    </script>
+  </body>
+</html>

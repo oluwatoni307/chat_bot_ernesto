@@ -1,20 +1,6 @@
-* {
-    box-sizing: border-box;
-    scrollbar-width: thin;
-    scrollbar-color: #2c3e50 #ecf0f1;
-}
-body {
-    font-family: 'Inter', sans-serif;
-    background-color: #f4f6f9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    overflow: hidden;
-}
+
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 /* Logo styling */
@@ -38,6 +24,7 @@ body {
     position: fixed;
     bottom: 20px;
     right: 20px;
+    font-family: 'Inter', sans-serif;
 
     width: 550px;
     height: 650px;
@@ -72,6 +59,40 @@ body {
     justify-content: center;
     color: white;
 }
+.profile-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #34495e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+.customer-info {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center horizontally */
+    text-align: center; /* Center text */
+    margin: 10px 0;
+}
+
+.customer-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333; /* Customize name color */
+    margin-bottom: 5px; /* Space below the name */
+}
+
+.customer-description {
+    font-size: 14px;
+    max-width: 80%;
+    color: #666; /* Customize text color */
+    margin-top: 0; /* No extra margin needed if name has spacing */
+    line-height: 1.4; /* Improve readability */
+}
+
+
 .chat-header .close-btn {
     cursor: pointer;
     transition: transform 0.2s ease;
