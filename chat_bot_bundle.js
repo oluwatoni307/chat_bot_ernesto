@@ -10,7 +10,7 @@
         };
     const chatbotHTML = `
             <div class="logo-container">
-                <img src="ernest_logo.jpg" alt="Logo" id="chatbotLogo" class="logo">
+                <img src="https://chat-bot-ernesto.vercel.app/ernest_logo.jpg" alt="Logo" id="chatbotLogo" class="logo">
             </div>
             <div class="chat-container hidden" id="chatContainer">
                 <div class="chat-header" style="background-color: ${config.headerColor}">
@@ -60,7 +60,7 @@
       "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css";
     document.head.appendChild(fontAwesome);
 
-    const chatbotCSS = "chatbot.css";
+    const chatbotCSS = "https://chat-bot-ernesto.vercel.app/chatbot.css";
     const link = document.createElement("link");
     link.rel = "stylesheet";
     link.href = chatbotCSS;

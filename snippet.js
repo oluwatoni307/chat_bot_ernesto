@@ -9,7 +9,7 @@ var Chatbot = (function() {
             config = config ? JSON.parse(config) : {};
             
             // Load main chatbot script
-            chatbotScript.src = 'chat_bot_bundle.js';
+            chatbotScript.src = 'https://chat-bot-ernesto.vercel.app/chat_bot_bundle.js';
             chatbotScript.async = true;
             chatbotScript.onload = function() {
                 window.initializeChatbot(config);
@@ -17,7 +17,7 @@ var Chatbot = (function() {
             
             // Load chatbot styles
             chatbotStyles.rel = 'stylesheet';
-            chatbotStyles.href = 'chatbot.css';
+            chatbotStyles.href = 'https://chat-bot-ernesto.vercel.app/chatbot.css';
             
             // Append to document
             document.head.appendChild(chatbotStyles);
