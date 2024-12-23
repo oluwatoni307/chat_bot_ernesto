@@ -88,6 +88,9 @@
     function showTypingIndicator() {
       typingIndicator.classList.add("show");
     }
+    function hideTypingIndicator() {
+    typingIndicator.classList.remove("show");
+}
 
 function sendMessage() {
         const message = input.value.trim();
@@ -126,7 +129,7 @@ function sendMessage() {
                 }
             })
             .catch((error) => {
-                // hideTypingIndicator();
+                hideTypingIndicator();
                 addMessage("Error: Unable to process your message.", "bot");
                 console.error("Error:", error);
             });
