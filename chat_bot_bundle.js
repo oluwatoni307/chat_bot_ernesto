@@ -89,19 +89,50 @@
       typingIndicator.classList.add("show");
     }
 
-    function sendMessage() {
-      const message = input.value.trim();
-      if (message) {
-        addMessage(message, "user");
-        input.value = "";
-        setTimeout(() => {
-          showTypingIndicator();
-          setTimeout(() => {
-            addMessage("I received your message!", "bot");
-          }, 1500);
-        }, 500);
-      }
+function sendMessage() {
+        const message = input.value.trim();
+        if (message) {
+            addMessage(message, "user");
+            input.value = "";
+            const data = {
+                userInput: message,
+                promptCode: "test",
+            };
+            
+            // Show the bot typing indicator
+            showTypingIndicator();
+            
+            // Send message to the Wix endpoint
+            fetch("https://www.socialworkmagic.com/_functions/processInput", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Server responded with status ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((data) => {
+                // Hide the typing indicator and add the bot's response
+                hideTypingIndicator();
+                if (data && data.reply) {
+                    addMessage(data.reply, "bot");
+                } else {
+                    addMessage("Sorry, I couldn't understand that.", "bot");
+                }
+            })
+            .catch((error) => {
+                hideTypingIndicator();
+                addMessage("Error: Unable to process your message.", "bot");
+                console.error("Error:", error);
+            });
+        }
     }
+
 
     sendButton.addEventListener("click", sendMessage);
     input.addEventListener("keypress", (e) => {
