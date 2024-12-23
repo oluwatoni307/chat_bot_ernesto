@@ -122,8 +122,8 @@ function sendMessage() {
             .then((data) => {
                 // Hide the typing indicator and add the bot's response
                 hideTypingIndicator();
-                if (data && data.reply) {
-                    addMessage(data.reply, "bot");
+                if (data && data.data) {
+                    addMessage(data.data, "bot");
                 } else {
                     addMessage("Sorry, I couldn't understand that.", "bot");
                 }
