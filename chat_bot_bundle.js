@@ -6,7 +6,9 @@
           name: options.name || 'Chatbot',
           description: options.description || 'I am here to help you.',
           initialMessage: options.initialMessage || 'Hello! How can I help you today?',
-          headerColor: options.headerColor || '#007bff' // Default blue color if none provided
+          headerColor: options.headerColor || '#007bff', // Default blue color if none provided
+          code: options.code||'test'
+
         };
     const chatbotHTML = `
             <div class="logo-container">
@@ -99,7 +101,7 @@ function sendMessage() {
             input.value = "";
             const data = {
                 userInput: message,
-                promptCode: "test",
+                promptCode: config.code,
             };
             
             // Show the bot typing indicator
