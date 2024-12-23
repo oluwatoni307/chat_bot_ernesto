@@ -126,7 +126,7 @@ function sendMessage() {
                 }
             })
             .catch((error) => {
-                hideTypingIndicator();
+                // hideTypingIndicator();
                 addMessage("Error: Unable to process your message.", "bot");
                 console.error("Error:", error);
             });
