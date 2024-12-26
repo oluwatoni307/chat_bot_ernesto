@@ -226,7 +226,7 @@ margin-right: 15px;
 @media screen and (min-width: 641px) and (max-width: 1024px) {
     .chat-container {
         width: 50%;
-        height: 50%;
+        height: 75%;
     }
 }
 
