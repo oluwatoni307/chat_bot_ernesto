@@ -1,13 +1,14 @@
 (function () {
   window.initializeChatbot = function (options = {}) {
-
-        // Simple configuration options
-        const config = {
-          name: options.name || 'Chatbot',
-          description: options.description || 'I am here to help you.',
-          initialMessage: options.initialMessage || 'Hello! How can I help you today?',
-          headerColor: options.headerColor || '#007bff' // Default blue color if none provided
-        };
+    // Simple configuration options
+    const config = {
+      name: options.name || "Chatbot",
+      description: options.description || "I am here to help you.",
+      initialMessage:
+        options.initialMessage || "Hello! How can I help you today?",
+      headerColor: options.headerColor || "#007bff", // Default blue color if none provided
+      code: options.code || "test",
+    };
     const chatbotHTML = `
             <div class="logo-container">
                 <img src="https://chat-bot-ernesto.vercel.app/ernest_logo.jpg" alt="Logo" id="chatbotLogo" class="logo">
@@ -19,8 +20,13 @@
                         <span>${config.name}</span>
                         
                     </div>
+                    <div class = "action">
+                     <div class="minimize-btn">
+              <i class="fas fa-minus"></i>
+            </div>
                     <div class="close-btn">
                         <i class="fas fa-times"></i>
+                    </div>
                     </div>
                 </div>
                 <div class="chat-messages" id="chatMessages">
@@ -73,6 +79,7 @@
     const sendButton = chatbotContainer.querySelector(".chat-input button");
     const chatbotLogo = chatbotContainer.querySelector("#chatbotLogo");
     const closeChat = chatbotContainer.querySelector(".close-btn");
+    const minimizeChat = chatbotContainer.querySelector(".minimize-btn");
 
     function addMessage(message, type) {
       const messageElement = document.createElement("div");
@@ -88,18 +95,85 @@
     function showTypingIndicator() {
       typingIndicator.classList.add("show");
     }
+    function hideTypingIndicator() {
+      typingIndicator.classList.remove("show");
+    }
+    function getLastFiveMessages() {
+      const allMessages = Array.from(chatMessages.querySelectorAll(".message"));
+      const lastFiveMessages = allMessages.slice(-6).map((message) => ({
+        type: message.classList.contains("user") ? "user" : "bot",
+        content: message.textContent.trim(),
+      }));
+      return JSON.stringify(lastFiveMessages);
+    }
+    function clearChatMessages() {
+      // Preserve the customer info and initial greeting
+      const customerInfo = chatMessages.querySelector(".customer-info");
+      const initialGreeting = chatMessages.querySelector(".message.bot");
+    
+      // Clear all messages
+      while (chatMessages.firstChild) {
+        chatMessages.removeChild(chatMessages.firstChild);
+      }
+    
+      // Re-add the preserved elements
+      if (customerInfo) {
+        chatMessages.appendChild(customerInfo);
+      }
+      if (initialGreeting) {
+        chatMessages.appendChild(initialGreeting);
+      }
+    
+      // Ensure the chat scrolls to the top
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    
+    
 
     function sendMessage() {
       const message = input.value.trim();
       if (message) {
         addMessage(message, "user");
         input.value = "";
-        setTimeout(() => {
-          showTypingIndicator();
-          setTimeout(() => {
-            addMessage("I received your message!", "bot");
-          }, 1500);
-        }, 500);
+        let full_message = getLastFiveMessages()
+        const data = {
+          userInput: full_message,
+          promptCode: config.code,
+        };
+
+        // Show the bot typing indicator
+        showTypingIndicator();
+
+        // Send message to the Wix endpoint
+        fetch("https://www.socialworkmagic.com/_functions/processInput", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(
+                `Server responded with status ${response.status}`
+              );
+            }
+            return response.json();
+          })
+          .then((data) => {
+            // Hide the typing indicator and add the bot's response
+            hideTypingIndicator();
+            if (data && data.data) {
+              addMessage(data.data, "bot");
+            } else {
+              addMessage("Sorry, I couldn't understand that.", "bot");
+            }
+          })
+          .catch((error) => {
+            hideTypingIndicator();
+            addMessage("Error: Unable to process your message.", "bot");
+            console.error("Error:", error);
+          });
       }
     }
 
@@ -115,6 +189,10 @@
     });
 
     closeChat.addEventListener("click", () => {
+      clearChatMessages()
+      chatContainer.classList.add("hidden");
+    });
+    minimizeChat.addEventListener("click", () => {
       chatContainer.classList.add("hidden");
     });
   };

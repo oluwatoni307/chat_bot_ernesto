@@ -26,8 +26,8 @@
     bottom: 20px;
     right: 20px;
     font-family: 'Inter', sans-serif;
-    width: 60%;
-    max-width: 450px;
+    width: 40%;
+    max-width: 400px;
     height: 80vh;
     max-height: 650px;
     background-color: white;
@@ -47,6 +47,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+.action {
+    display: flex;
+}
+.minimize-btn{
+margin-right: 15px;
 }
 
 .chat-header .profile {
@@ -147,7 +153,7 @@
 }
 
 /* Mobile-specific styles */
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 768px) {
     .logo {
         width: 40px;
         height: 40px;
@@ -156,8 +162,9 @@
     .chat-container {
         bottom: 0;
         right: 0;
-        width: 70%;
-        height: 80%;
+        width: 100%;
+        height: 100%;
+        max-width: 700px;
         max-height: 100vh;
         border-radius: 0;
     }
@@ -199,12 +206,27 @@
         font-size: 13px;
     }
 }
+.minimize-btn i,
+.close-btn i {
+  font-size: 1.5rem; /* Adjust size as needed */
+  width: 2rem;      /* Optional: Adjust button dimensions */
+  height: 2rem;     /* Optional: Adjust button dimensions */
+  line-height: 2rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+.minimize-btn:hover i,
+.close-btn:hover i {
+  color: #ff0000; /* Optional: Add hover effect */
+}
+
 
 /* Tablet-specific styles */
 @media screen and (min-width: 641px) and (max-width: 1024px) {
     .chat-container {
-        width: 70%;
-        height: 70%;
+        width: 50%;
+        height: 50%;
     }
 }
 
