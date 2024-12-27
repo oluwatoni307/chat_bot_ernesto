@@ -4,11 +4,17 @@
     const config = {
       name: options.name || "Chatbot",
       description: options.description || "I am here to help you.",
-      initialMessage:
-        options.initialMessage || "Hello! How can I help you today?",
-      headerColor: options.headerColor || "#007bff", // Default blue color if none provided
+      initialMessage: options.initialMessage || "Hello! How can I help you today?",
+      headerColor: options.headerColor || "#696969",
+      userMessageColor: options.userMessageColor || "#D3D3D3 ", // Default light gray for user messages
+      botMessageColor: options.botMessageColor || "#d1e7dd",   // Default light green for bot messages
       code: options.code || "test",
+      bottextcolor: options.bottextcolor || "#000000",
+      usertextcolor: options.usertextcolor || "#000000",
+      
+
     };
+    
     const chatbotHTML = `
             <div class="logo-container">
                 <img src="https://chat-bot-ernesto.vercel.app/ernest_logo.jpg" alt="Logo" id="chatbotLogo" class="logo">
@@ -39,8 +45,8 @@
     </p> <!-- Description -->
 </div>
 
-                    <div class="message bot animate">
-                        Hello! How can I help you today?
+                    <div class="message bot animate" style="background-color: ${config.botMessageColor} ; color: ${config.bottextcolor}">
+                       ${config.initialMessage} 
                     </div>
                     <div class="typing-indicator">
                         <span></span>
@@ -50,7 +56,7 @@
                 </div>
                 <div class="chat-input">
                     <input type="text" placeholder="Type your message..." aria-label="Message input">
-                    <button type="submit" aria-label="Send message">Send</button>
+                    <button type="submit" aria-label="Send message" style="background-color: ${config.headerColor}">Send</button>
                 </div>
             </div>
         `;
@@ -85,13 +91,30 @@
       const messageElement = document.createElement("div");
       messageElement.classList.add("message", type);
       messageElement.textContent = message;
+    
+      // Apply colors based on message type
+      if (type === "user") {
+        messageElement.style.backgroundColor = config.userMessageColor;
+        messageElement.style.color = config.usertextcolor;
+
+
+      } else if (type === "bot") {
+        messageElement.style.backgroundColor = config.botMessageColor;
+        messageElement.style.color = config.bottextcolor;
+
+      }
+    
       typingIndicator.classList.remove("show");
       chatMessages.insertBefore(messageElement, typingIndicator);
-      void messageElement.offsetWidth; // Trigger reflow for animation
+    
+      // Trigger reflow for animation
+      void messageElement.offsetWidth; 
       messageElement.classList.add("animate");
+    
+      // Scroll to the bottom
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
-
+    
     function showTypingIndicator() {
       typingIndicator.classList.add("show");
     }
