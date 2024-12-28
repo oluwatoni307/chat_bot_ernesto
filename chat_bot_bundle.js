@@ -17,7 +17,7 @@
     
     const chatbotHTML = `
             <div class="logo-container">
-                <img src="https://chat-bot-ernesto.vercel.app/ernest_logo.jpg" alt="Logo" id="chatbotLogo" class="logo">
+                <img src="https://chat-bot-ernesto.vercel.app/logo.jpg" alt="Logo" id="chatbotLogo" class="logo">
             </div>
             <div class="chat-container hidden" id="chatContainer">
                 <div class="chat-header" style="background-color: ${config.headerColor}">
