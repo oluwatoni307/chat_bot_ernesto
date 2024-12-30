@@ -8,7 +8,7 @@
       headerColor: options.headerColor || "#696969",
       userMessageColor: options.userMessageColor || "#D3D3D3 ", // Default light gray for user messages
       botMessageColor: options.botMessageColor || "#d1e7dd",   // Default light green for bot messages
-      code: options.code || "test",
+      code: options.promptCode || "test",
       bottextcolor: options.bottextcolor || "#000000",
       usertextcolor: options.usertextcolor || "#000000",
       width: options.width || "35%",
