@@ -11,8 +11,8 @@
       code: options.code || "test",
       bottextcolor: options.bottextcolor || "#000000",
       usertextcolor: options.usertextcolor || "#000000",
-      width: options.width || "85%",
-      height: options.height ||"35%",
+      width: options.width || "35%",
+      height: options.height ||"85%",
       
 
     };
