@@ -28,9 +28,9 @@
     right: 20px;
     font-family: 'Inter', sans-serif;
     width: 40%;
-    max-width: 400px;
+    /* max-width: 400px; */
     height: 85%;
-    max-height: 800px;
+    /* max-height: 800px; */
     background-color: white;
     border-radius: 16px;
     box-shadow: 0 15px 35px rgba(0,0,0,0.08);

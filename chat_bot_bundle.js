@@ -11,6 +11,8 @@
       code: options.code || "test",
       bottextcolor: options.bottextcolor || "#000000",
       usertextcolor: options.usertextcolor || "#000000",
+      width: options.width || "85%",
+      height: options.height ||"35%",
       
 
     };
@@ -19,7 +21,7 @@
             <div class="logo-container">
                 <img src="https://chat-bot-ernesto.vercel.app/logo.jpg" alt="Logo" id="chatbotLogo" class="logo">
             </div>
-            <div class="chat-container hidden" id="chatContainer">
+            <div class="chat-container hidden" id="chatContainer" style="width: ${config.width}; height: ${config.height}">
                 <div class="chat-header" style="background-color: ${config.headerColor}">
                     <div class="profile">
                         <div class="profile-image">AI</div>
