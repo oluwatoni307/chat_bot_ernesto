@@ -92,18 +92,20 @@
     function addMessage(message, type) {
       const messageElement = document.createElement("div");
       messageElement.classList.add("message", type);
-      messageElement.textContent = message;
+    
+      if (type === "bot") {
+        messageElement.innerHTML = message;
+      } else {
+        messageElement.textContent = message;
+      }
     
       // Apply colors based on message type
       if (type === "user") {
         messageElement.style.backgroundColor = config.userMessageColor;
         messageElement.style.color = config.usertextcolor;
-
-
       } else if (type === "bot") {
         messageElement.style.backgroundColor = config.botMessageColor;
         messageElement.style.color = config.bottextcolor;
-
       }
     
       typingIndicator.classList.remove("show");
@@ -153,40 +155,29 @@
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
     
-    
-
     function sendMessage() {
       const message = input.value.trim();
       if (message) {
         addMessage(message, "user");
         input.value = "";
-        let full_message = getLastFiveMessages()
-        const data = {
-          userInput: full_message,
-          promptCode: config.code,
-        };
-
+        let full_message = getLastFiveMessages();
+        
         // Show the bot typing indicator
         showTypingIndicator();
-
-        // Send message to the Wix endpoint
-        fetch("https://www.socialworkmagic.com/_functions/processInput", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        })
+    
+        // Create URL with query parameters
+        const baseUrl = "https://www.socialworkmagic.com/_functions/processInput";
+        const url = `${baseUrl}?userInput=${encodeURIComponent(full_message)}&promptCode=${encodeURIComponent(config.code)}`;
+    
+        // Send GET request with URL parameters
+        fetch(url)
           .then((response) => {
             if (!response.ok) {
-              throw new Error(
-                `Server responded with status ${response.status}`
-              );
+              throw new Error(`Server responded with status ${response.status}`);
             }
             return response.json();
           })
           .then((data) => {
-            // Hide the typing indicator and add the bot's response
             hideTypingIndicator();
             if (data && data.data) {
               addMessage(data.data, "bot");
@@ -201,7 +192,7 @@
           });
       }
     }
-
+    
 
     sendButton.addEventListener("click", sendMessage);
     input.addEventListener("keypress", (e) => {
