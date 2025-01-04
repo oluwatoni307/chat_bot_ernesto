@@ -12,8 +12,8 @@
 
 .logo {
     cursor: pointer;
-    width: 60px;
-    height: 60px;
+    width: 75px;
+    height: 75px;
     border-radius: 50%;
     border: 2px solid #ddd;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
@@ -225,7 +225,7 @@ margin-right: 15px;
 
 .minimize-btn:hover i,
 .close-btn:hover i {
-  color: #434344; /* Optional: Add hover effect */
+  color: #747479; /* Optional: Add hover effect */
 }
 
 
