@@ -170,7 +170,7 @@ margin-right: 15px;
         bottom: 0;
         right: 0;
         width: 100% !important;
-        height: 100vh !important;
+        height: 100% !important;
         max-width: 700px;
         /* max-height: 100vh; */
         border-radius: 0;
@@ -233,7 +233,7 @@ margin-right: 15px;
 @media screen and (min-width: 641px) and (max-width: 1024px) {
     .chat-container {
         width: 50% !important;
-        height: 100vh !important;
+        height: 100% !important;
     }
 }
 
