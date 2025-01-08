@@ -4,31 +4,37 @@
     const config = {
       name: options.name || "Chatbot",
       description: options.description || "I am here to help you.",
-      greetings: options.greetings || [
-        "Hello! 👋 I'm your AI assistant.",
-        "I'm here to help answer your questions.",
-        "What can I help you with today?"
-      ],      headerColor: options.headerColor || "#696969",
+
+      firstGreeting:
+        options.firstGreeting || "Hello! 👋 I'm your AI assistant.",
+      secondGreeting:
+        options.secondGreeting || "I'm here to help answer your questions.",
+      thirdGreeting: options.thirdGreeting || "What can I help you with today?",
+      headerColor: options.headerColor || "#696969",
       userMessageColor: options.userMessageColor || "#D3D3D3 ", // Default light gray for user messages
-      botMessageColor: options.botMessageColor || "#d1e7dd",   // Default light green for bot messages
+      botMessageColor: options.botMessageColor || "#d1e7dd", // Default light green for bot messages
       code: options.promptCode || "test",
       bottextcolor: options.bottextcolor || "#000000",
       usertextcolor: options.usertextcolor || "#000000",
       width: options.width || "35%",
-      height: options.height ||"85%",
-      
-
+      height: options.height || "85%",
     };
+
     async function displayGreetings() {
-      for (const message of config.greetings) {
+      const greetings = [
+        config.firstGreeting,
+        config.secondGreeting,
+        config.thirdGreeting
+    ];
+      for (const message of greetings) {
         showTypingIndicator();
-        await new Promise(resolve => setTimeout(resolve, config.typingDelay));
+        await new Promise((resolve) => setTimeout(resolve, config.typingDelay));
         hideTypingIndicator();
         addMessage(message, "bot");
-        await new Promise(resolve => setTimeout(resolve, config.greetingDelay));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
       }
     }
-    
+
     const chatbotHTML = `
             <div class="logo-container">
                 <img src="https://chat-bot-ernesto.vercel.app/logo.jpg" alt="Logo" id="chatbotLogo" class="logo">
@@ -101,13 +107,13 @@
     function addMessage(message, type) {
       const messageElement = document.createElement("div");
       messageElement.classList.add("message", type);
-    
+
       if (type === "bot") {
         messageElement.innerHTML = message;
       } else {
         messageElement.textContent = message;
       }
-    
+
       // Apply colors based on message type
       if (type === "user") {
         messageElement.style.backgroundColor = config.userMessageColor;
@@ -116,18 +122,18 @@
         messageElement.style.backgroundColor = config.botMessageColor;
         messageElement.style.color = config.bottextcolor;
       }
-    
+
       typingIndicator.classList.remove("show");
       chatMessages.insertBefore(messageElement, typingIndicator);
-    
+
       // Trigger reflow for animation
-      void messageElement.offsetWidth; 
+      void messageElement.offsetWidth;
       messageElement.classList.add("animate");
-    
+
       // Scroll to the bottom
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
-    
+
     function showTypingIndicator() {
       typingIndicator.classList.add("show");
     }
@@ -146,42 +152,46 @@
       // Preserve the customer info and initial greeting
       const customerInfo = chatMessages.querySelector(".customer-info");
       const initialGreeting = chatMessages.querySelector(".message.bot");
-    
+
       // Clear all messages
       while (chatMessages.firstChild) {
         chatMessages.removeChild(chatMessages.firstChild);
       }
-    
+
       // Re-add the preserved elements
       if (customerInfo) {
         chatMessages.appendChild(customerInfo);
       }
       displayGreetings();
 
-    
       // Ensure the chat scrolls to the top
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
-    
+
     function sendMessage() {
       const message = input.value.trim();
       if (message) {
         addMessage(message, "user");
         input.value = "";
         let full_message = getLastFiveMessages();
-        
+
         // Show the bot typing indicator
         showTypingIndicator();
-    
+
         // Create URL with query parameters
-        const baseUrl = "https://www.socialworkmagic.com/_functions/processInput";
-        const url = `${baseUrl}?userInput=${encodeURIComponent(full_message)}&promptCode=${encodeURIComponent(config.code)}`;
-    
+        const baseUrl =
+          "https://www.socialworkmagic.com/_functions/processInput";
+        const url = `${baseUrl}?userInput=${encodeURIComponent(
+          full_message
+        )}&promptCode=${encodeURIComponent(config.code)}`;
+
         // Send GET request with URL parameters
         fetch(url)
           .then((response) => {
             if (!response.ok) {
-              throw new Error(`Server responded with status ${response.status}`);
+              throw new Error(
+                `Server responded with status ${response.status}`
+              );
             }
             return response.json();
           })
@@ -200,7 +210,6 @@
           });
       }
     }
-    
 
     sendButton.addEventListener("click", sendMessage);
     input.addEventListener("keypress", (e) => {
@@ -217,7 +226,7 @@
     });
 
     closeChat.addEventListener("click", () => {
-      clearChatMessages()
+      clearChatMessages();
       chatContainer.classList.add("hidden");
     });
     minimizeChat.addEventListener("click", () => {
