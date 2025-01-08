@@ -28,7 +28,7 @@
     ];
       for (const message of greetings) {
         showTypingIndicator();
-        await new Promise((resolve) => setTimeout(resolve, config.typingDelay));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         hideTypingIndicator();
         addMessage(message, "bot");
         await new Promise((resolve) => setTimeout(resolve, 1000));
