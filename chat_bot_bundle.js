@@ -43,7 +43,7 @@
                 <div class="chat-header" style="background-color: ${config.headerColor}">
                     <div class="profile">
                         <div class="profile-image">AI</div>
-                        <span>${config.name}</span>
+                        <span style="font-size: 18px">${config.name}</span>
                         
                     </div>
                     <div class = "action">
