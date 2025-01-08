@@ -4,8 +4,11 @@
     const config = {
       name: options.name || "Chatbot",
       description: options.description || "I am here to help you.",
-      initialMessage: options.initialMessage || "Hello! How can I help you today?",
-      headerColor: options.headerColor || "#696969",
+      greetings: options.greetings || [
+        "Hello! 👋 I'm your AI assistant.",
+        "I'm here to help answer your questions.",
+        "What can I help you with today?"
+      ],      headerColor: options.headerColor || "#696969",
       userMessageColor: options.userMessageColor || "#D3D3D3 ", // Default light gray for user messages
       botMessageColor: options.botMessageColor || "#d1e7dd",   // Default light green for bot messages
       code: options.promptCode || "test",
@@ -16,6 +19,15 @@
       
 
     };
+    async function displayGreetings() {
+      for (const message of config.greetings) {
+        showTypingIndicator();
+        await new Promise(resolve => setTimeout(resolve, config.typingDelay));
+        hideTypingIndicator();
+        addMessage(message, "bot");
+        await new Promise(resolve => setTimeout(resolve, config.greetingDelay));
+      }
+    }
     
     const chatbotHTML = `
             <div class="logo-container">
@@ -47,9 +59,6 @@
     </p> <!-- Description -->
 </div>
 
-                    <div class="message bot animate" style="background-color: ${config.botMessageColor} ; color: ${config.bottextcolor}">
-                       ${config.initialMessage} 
-                    </div>
                     <div class="typing-indicator">
                         <span></span>
                         <span></span>
@@ -147,9 +156,8 @@
       if (customerInfo) {
         chatMessages.appendChild(customerInfo);
       }
-      if (initialGreeting) {
-        chatMessages.appendChild(initialGreeting);
-      }
+      displayGreetings();
+
     
       // Ensure the chat scrolls to the top
       chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -203,6 +211,9 @@
 
     chatbotLogo.addEventListener("click", () => {
       chatContainer.classList.toggle("hidden");
+      if (!chatContainer.classList.contains("hidden")) {
+        displayGreetings();
+      }
     });
 
     closeChat.addEventListener("click", () => {
