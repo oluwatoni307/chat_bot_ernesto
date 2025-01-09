@@ -25,16 +25,16 @@
         config.firstGreeting,
         config.secondGreeting,
         config.thirdGreeting
-    ];
+      ];
       for (const message of greetings) {
+        // console.log("Sending greeting:", message);
         showTypingIndicator();
         await new Promise((resolve) => setTimeout(resolve, 1000));
         hideTypingIndicator();
         addMessage(message, "bot");
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 500));
       }
     }
-
     const chatbotHTML = `
             <div class="logo-container">
                 <img src="https://chat-bot-ernesto.vercel.app/logo.jpg" alt="Logo" id="chatbotLogo" class="logo">
@@ -149,25 +149,27 @@
       return JSON.stringify(lastFiveMessages);
     }
     function clearChatMessages() {
-      // Preserve the customer info and initial greeting
+      // Preserve customer-info and typing-indicator
       const customerInfo = chatMessages.querySelector(".customer-info");
-      const initialGreeting = chatMessages.querySelector(".message.bot");
-
+      const typingIndicator = chatMessages.querySelector(".typing-indicator");
+    
       // Clear all messages
       while (chatMessages.firstChild) {
         chatMessages.removeChild(chatMessages.firstChild);
       }
-
-      // Re-add the preserved elements
+    
+      // Reappend preserved elements in correct order
       if (customerInfo) {
         chatMessages.appendChild(customerInfo);
       }
-      displayGreetings();
-
-      // Ensure the chat scrolls to the top
-      chatMessages.scrollTop = chatMessages.scrollHeight;
+      if (typingIndicator) {
+        chatMessages.appendChild(typingIndicator);
+      }
+    
+    
+      // Scroll to the top
+      chatMessages.scrollTop = 0;
     }
-
     function sendMessage() {
       const message = input.value.trim();
       if (message) {
