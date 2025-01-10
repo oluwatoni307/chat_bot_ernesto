@@ -80,6 +80,8 @@
 
     const chatbotContainer = document.createElement("div");
     chatbotContainer.id = "chatbot";
+    chatbotContainer.style.visibility = "hidden"; // Initially hidden
+
     chatbotContainer.innerHTML = chatbotHTML;
     document.body.appendChild(chatbotContainer);
 
@@ -93,6 +95,9 @@
     const link = document.createElement("link");
     link.rel = "stylesheet";
     link.href = chatbotCSS;
+    link.onload = () => {
+      chatbotContainer.style.visibility = "visible"; // Show when ready
+    };
     document.head.appendChild(link);
 
     const chatContainer = chatbotContainer.querySelector("#chatContainer");
