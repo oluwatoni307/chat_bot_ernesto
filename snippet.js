@@ -1,3 +1,5 @@
+
+
 var Chatbot = (function() {
     var chatbotScript = document.createElement('script');
     var chatbotStyles = document.createElement('link');

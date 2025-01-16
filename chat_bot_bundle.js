@@ -1,3 +1,11 @@
+// Include marked.js from a CDN
+const markedScript = document.createElement('script');
+markedScript.src = 'https://cdn.jsdelivr.net/npm/marked/marked.min.js';
+markedScript.onload = () => {
+  console.log('Marked.js loaded successfully!');
+};
+document.head.appendChild(markedScript);
+
 (function () {
   window.initializeChatbot = function (options = {}) {
     // Simple configuration options
@@ -19,6 +27,7 @@
       width: options.width || "35%",
       height: options.height || "85%",
     };
+    let wasMinimized = false;
 
     async function displayGreetings() {
       const greetings = [
@@ -114,7 +123,7 @@
       messageElement.classList.add("message", type);
 
       if (type === "bot") {
-        messageElement.innerHTML = message;
+        messageElement.innerHTML = marked.parse(message); // Use marked to parse Markdown
       } else {
         messageElement.textContent = message;
       }
@@ -227,16 +236,20 @@
 
     chatbotLogo.addEventListener("click", () => {
       chatContainer.classList.toggle("hidden");
-      if (!chatContainer.classList.contains("hidden")) {
+      if (!chatContainer.classList.contains("hidden") && !wasMinimized) {
         displayGreetings();
       }
     });
 
     closeChat.addEventListener("click", () => {
+      wasMinimized = false;
+
       clearChatMessages();
       chatContainer.classList.add("hidden");
     });
     minimizeChat.addEventListener("click", () => {
+      wasMinimized = true;
+
       chatContainer.classList.add("hidden");
     });
   };
