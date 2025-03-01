@@ -122,12 +122,23 @@ document.head.appendChild(markedScript);
       const messageElement = document.createElement("div");
       messageElement.classList.add("message", type);
 
-      if (type === "bot") {
-        messageElement.innerHTML = marked.parse(message); // Use marked to parse Markdown
-      } else {
+   if (type === "bot") {
+    try {
+        // Check if marked exists and is a function
+        if (typeof marked !== 'undefined' && typeof marked.parse === 'function') {
+            messageElement.innerHTML = marked.parse(message);
+        } else {
+            // Fallback if marked is not available
+            messageElement.textContent = message;
+        }
+    } catch (error) {
+        // Fallback in case of any errors during parsing
+        console.warn('Markdown parsing failed:', error);
         messageElement.textContent = message;
-      }
-
+    }
+} else {
+    messageElement.textContent = message;
+}
       // Apply colors based on message type
       if (type === "user") {
         messageElement.style.backgroundColor = config.userMessageColor;
