@@ -28,6 +28,7 @@ document.head.appendChild(markedScript);
       height: options.height || "85%",
     };
     let wasMinimized = false;
+    let greet = false
 
     async function displayGreetings() {
       const greetings = [
@@ -43,6 +44,7 @@ document.head.appendChild(markedScript);
         addMessage(message, "bot");
         await new Promise((resolve) => setTimeout(resolve, 500));
       }
+      greet = true;
     }
     const chatbotHTML = `
             <div class="logo-container">
@@ -125,11 +127,13 @@ document.head.appendChild(markedScript);
    if (type === "bot") {
     try {
         // Check if marked exists and is a function
-        if (typeof marked !== 'undefined' && typeof marked.parse === 'function') {
-            messageElement.innerHTML = marked.parse(message);
+        if (greet == false) {
+          messageElement.textContent = message;
+
         } else {
             // Fallback if marked is not available
-            messageElement.textContent = message;
+            messageElement.innerHTML = marked.parse(message);
+
         }
     } catch (error) {
         // Fallback in case of any errors during parsing
@@ -256,6 +260,7 @@ document.head.appendChild(markedScript);
       wasMinimized = false;
 
       clearChatMessages();
+      greet = false;
       chatContainer.classList.add("hidden");
     });
     minimizeChat.addEventListener("click", () => {
