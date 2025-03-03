@@ -1,10 +1,4 @@
-// Include marked.js from a CDN
-const markedScript = document.createElement('script');
-markedScript.src = 'https://cdn.jsdelivr.net/npm/marked/marked.min.js';
-markedScript.onload = () => {
-  console.log('Marked.js loaded successfully!');
-};
-document.head.appendChild(markedScript);
+
 
 (function () {
   window.initializeChatbot = function (options = {}) {
@@ -126,15 +120,14 @@ document.head.appendChild(markedScript);
 
    if (type === "bot") {
     try {
-        // Check if marked exists and is a function
-        if (greet == false) {
-          messageElement.textContent = message;
-
-        } else {
-            // Fallback if marked is not available
-            messageElement.innerHTML = marked.parse(message);
-
-        }
+      if (!greet) {
+        messageElement.textContent = message;
+      } else if (window.marked && window.marked.parse) {
+        messageElement.innerHTML = window.marked.parse(message); // Use window.marked
+      } else {
+        console.warn("Marked.js not loaded yet, falling back to plain text");
+        messageElement.textContent = message;
+      }
     } catch (error) {
         // Fallback in case of any errors during parsing
         console.warn('Markdown parsing failed:', error);
