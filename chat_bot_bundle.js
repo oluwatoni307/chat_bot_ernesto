@@ -120,14 +120,15 @@
 
    if (type === "bot") {
     try {
-      if (!greet) {
-        messageElement.textContent = message;
-      } else if (window.marked && window.marked.parse) {
-        messageElement.innerHTML = window.marked.parse(message); // Use window.marked
-      } else {
-        console.warn("Marked.js not loaded yet, falling back to plain text");
-        messageElement.textContent = message;
-      }
+        // Check if marked exists and is a function
+        if (greet == false) {
+          messageElement.textContent = message;
+
+        } else {
+            // Fallback if marked is not available
+            messageElement.innerHTML = marked.parse(message);
+
+        }
     } catch (error) {
         // Fallback in case of any errors during parsing
         console.warn('Markdown parsing failed:', error);
