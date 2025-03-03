@@ -1,3 +1,4 @@
+import { marked } from 'marked.js';
 
 
 (function () {
