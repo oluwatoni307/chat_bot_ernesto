@@ -132,7 +132,7 @@ document.head.appendChild(markedScript);
 
         } else {
             // Fallback if marked is not available
-            messageElement.innerHTML = marked.parse(message);
+            messageElement.innerHTML = marked(message);
 
         }
     } catch (error) {
