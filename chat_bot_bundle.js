@@ -143,14 +143,24 @@ document.head.appendChild(markedScript);
 } else {
     messageElement.textContent = message;
 }
-      // Apply colors based on message type
-      if (type === "user") {
-        messageElement.style.backgroundColor = config.userMessageColor;
-        messageElement.style.color = config.usertextcolor;
-      } else if (type === "bot") {
-        messageElement.style.backgroundColor = config.botMessageColor;
-        messageElement.style.color = config.bottextcolor;
-      }
+  // Apply colors based on message type with !important to override external themes
+if (type === "user") {
+  // Using !important to ensure these styles aren't overridden by external themes
+  messageElement.setAttribute('style', 
+    `background-color: ${config.userMessageColor} !important; 
+     color: ${config.usertextcolor} !important;`
+  );
+
+} else if (type === "bot") {
+  // Using !important to ensure these styles aren't overridden by external themes
+  messageElement.setAttribute('style', 
+    `background-color: ${config.botMessageColor} !important; 
+     color: ${config.bottextcolor} !important;`
+  );
+  
+  // Add a custom data attribute to further target these elements with CSS if needed
+}
+
 
       typingIndicator.classList.remove("show");
       chatMessages.insertBefore(messageElement, typingIndicator);
