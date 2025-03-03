@@ -1,5 +1,10 @@
-  import { marked } from './marked.js';
-
+// Include marked.js from a CDN
+const markedScript = document.createElement('script');
+markedScript.src = 'https://cdn.jsdelivr.net/npm/marked/marked.min.js';
+markedScript.onload = () => {
+  console.log('Marked.js loaded successfully!');
+};
+document.head.appendChild(markedScript);
 
 (function () {
   window.initializeChatbot = function (options = {}) {
