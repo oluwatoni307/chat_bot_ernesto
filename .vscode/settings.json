@@ -1,5 +1,6 @@
 {
     "markdown.styles": [
         "https://socialsimulation.net/css/post.min.css"
-    ]
+    ],
+    "liveServer.settings.port": 5501
 }
