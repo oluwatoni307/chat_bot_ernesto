@@ -1,52 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Test Chatbot Widget</title>
-  </head>
-  <body>
-    <h1>Test Chatbot Widget</h1>
-    <div id="chatContainer"></div>
-
-    
-
-
-<!-- Include your chatbot widget JavaScript file -->
-<script src="https://chat-bot-ernesto.vercel.app/bundle.js" data-config='{
-  "name": "HelpBot",
-  "description": "Your friendly assistant",
-  "headerColor": "#28a745",
-  "promptCode": "help"
-}'></script>
-</script>
-
-
-
-
-
-<!-- Include your chatbot widget JavaScript file --><script>
-  var chatbotConfig = {
-    promptCode: "mandatedreporterca",
-    name: "Mandated Reporter Helper Full CA",
-    description: "Instant Support and Answers for Mandated Reporters in California",
-    firstGreeting: "Hi! I'm the Mandated Reporter Helper.",
-    secondGreeting: "I can help Mandated Reporters get clarity about their duties as Mandated Reporters.",
-    thirdGreeting: "How can I help you today?",
-    headerColor: "#1a6aff",
-    userMessageColor: "#1a6aff",
-    botMessageColor: "#d3e3fd",
-    bottextcolor: "#000000",
-    usertextcolor: "#ffffff",
-    width: "30%",
-    height: "95%",
-  };
-
-  var s1 = document.createElement("script");
-  s1.async = true;
-  s1.src = "chatbot.js"; // Or your hosted URL
-  s1.setAttribute("data-config", JSON.stringify(chatbotConfig));
-  document.head.appendChild(s1);
-</script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Test</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <h1>Chatbot Test</h1>
+    <script>
+        window.chatbotConfig = {
+            name: "MyBot",
+            description: "Your friendly AI assistant.",
+            firstGreeting: "Hi! How can I assist you?",
+            secondGreeting: "Feel free to ask anything!",
+            thirdGreeting: "I'm here for you!",
+            headerColor: "#4CAF50",
+            userMessageColor: "#E0F7FA",
+            botMessageColor: "#F1F8E9",
+            promptCode: "mandatedreporterca",
+            bottextcolor: "#000000",
+            usertextcolor: "#000000",
+            width: "40%",
+            height: "80%"
+        };
+    </script>
+    <script src="bundle.js"></script>
 </body>
 </html>
