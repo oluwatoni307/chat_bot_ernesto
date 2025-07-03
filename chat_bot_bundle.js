@@ -19,17 +19,6 @@
     let wasMinimized = false;
     let greet = false;
 
-    // Load marked.js dynamically inside the function
-    const markedScript = document.createElement("script");
-    markedScript.src = "https://cdn.jsdelivr.net/npm/marked/marked.min.js";
-    markedScript.onload = () => {
-      console.log("Marked.js loaded successfully!");
-    };
-    markedScript.onerror = () => {
-      console.error("Failed to load Marked.js");
-    };
-    document.head.appendChild(markedScript);
-
     async function displayGreetings() {
       const greetings = [config.firstGreeting, config.secondGreeting, config.thirdGreeting];
       for (const message of greetings) {
@@ -114,22 +103,21 @@
       messageElement.classList.add("message", type);
 
       if (type === "bot") {
-        try {
-          // Check if marked exists and is a function (wait for it to load)
-          if (greet === false) {
-            messageElement.textContent = message;
-          } else if (typeof marked === "object" && typeof marked.parse === "function") {
-            messageElement.innerHTML = marked.parse(message);
-          } else {
-            // Fallback if marked is not yet loaded
-            console.warn("Marked.js is not loaded yet, falling back to plain text.");
+        // Handle HTML content with Tailwind classes for bot messages
+        if (greet === false) {
+          // For greeting messages, use plain text
+          messageElement.textContent = message;
+        } else {
+          // For API responses, insert HTML directly (assumes HTML with Tailwind classes)
+          try {
+            messageElement.innerHTML = message;
+          } catch (error) {
+            console.warn("HTML parsing failed:", error);
             messageElement.textContent = message;
           }
-        } catch (error) {
-          console.warn("Markdown parsing failed:", error);
-          messageElement.textContent = message;
         }
       } else {
+        // User messages remain as plain text
         messageElement.textContent = message;
       }
 
@@ -200,6 +188,7 @@
           .then((data) => {
             hideTypingIndicator();
             if (data && data.data) {
+              // Expecting HTML content with Tailwind classes from API
               addMessage(data.data, "bot");
             } else {
               addMessage("Sorry, I couldn't understand that.", "bot");
