@@ -18,6 +18,7 @@
     };
     let wasMinimized = false;
     let greet = false;
+    let conversationHistory = ""; // Store conversation history as string
 
     async function displayGreetings() {
       const greetings = [config.firstGreeting, config.secondGreeting, config.thirdGreeting];
@@ -151,14 +152,7 @@
     function hideTypingIndicator() {
       typingIndicator.classList.remove("show");
     }
-    function getLastFiveMessages() {
-      const allMessages = Array.from(chatMessages.querySelectorAll(".message"));
-      const lastFiveMessages = allMessages.slice(-6).map((message) => ({
-        type: message.classList.contains("user") ? "user" : "bot",
-        content: message.textContent.trim(),
-      }));
-      return JSON.stringify(lastFiveMessages);
-    }
+    
     function clearChatMessages() {
       const customerInfo = chatMessages.querySelector(".customer-info");
       const typingIndicator = chatMessages.querySelector(".typing-indicator");
@@ -168,17 +162,19 @@
       if (customerInfo) chatMessages.appendChild(customerInfo);
       if (typingIndicator) chatMessages.appendChild(typingIndicator);
       chatMessages.scrollTop = 0;
+      // Clear the conversation history when chat is cleared
+      conversationHistory = "";
     }
+    
     function sendMessage() {
       const message = input.value.trim();
       if (message) {
         addMessage(message, "user");
         input.value = "";
-        let full_message = getLastFiveMessages();
         showTypingIndicator();
 
         const baseUrl = "https://www.socialworkmagic.com/_functions/processInput";
-        const url = `${baseUrl}?userInput=${encodeURIComponent(full_message)}&promptCode=${encodeURIComponent(config.code)}`;
+        const url = `${baseUrl}?userInput=${encodeURIComponent(message)}&history=${encodeURIComponent(conversationHistory)}&promptCode=${encodeURIComponent(config.code)}`;
 
         fetch(url)
           .then((response) => {
@@ -188,8 +184,20 @@
           .then((data) => {
             hideTypingIndicator();
             if (data && data.data) {
-              // Expecting HTML content with Tailwind classes from API
-              addMessage(data.data, "bot");
+              // Expecting structured response: { updated_history: "...", response: "..." }
+              try {
+                const parsedData = JSON.parse(data.data);
+                
+                // Update the conversation history with the backend's managed version
+                conversationHistory = parsedData.updated_history || "";
+                
+                // Display the response
+                addMessage(parsedData.response || "Sorry, I couldn't understand that.", "bot");
+              } catch (error) {
+                console.warn("Failed to parse structured response:", error);
+                // Fallback to treating data.data as plain response
+                addMessage(data.data, "bot");
+              }
             } else {
               addMessage("Sorry, I couldn't understand that.", "bot");
             }
